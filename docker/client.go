@@ -26,7 +26,7 @@ type (
 	}
 )
 
-func (client *dockerClient) GetEvents() <-chan *Event {
+func (client *dockerClient) GetEvents() chan *Event {
 	eventChan := make(chan *Event, 100)
 	go func() {
 		defer close(eventChan)
@@ -65,3 +65,5 @@ func (client *dockerClient) newConnection() (*httputil.ClientConn, error) {
 func NewClient(url string) (Docker, error) {
 	return &dockerClient{url}, nil
 }
+
+

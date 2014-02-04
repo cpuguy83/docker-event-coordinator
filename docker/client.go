@@ -6,6 +6,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/httputil"
+  "strings"
 )
 
 
@@ -54,7 +55,8 @@ func (client *dockerClient) GetEvents() chan *Event {
 }
 
 func (client *dockerClient) newConnection() (*httputil.ClientConn, error) {
-	conn, err := net.Dial("tcp", "192.168.42.43:4243")
+  url := strings.Split(client.url, "://")
+	conn, err := net.Dial(url[0], url[1])
 	if err != nil {
 		return nil, err
 	}
